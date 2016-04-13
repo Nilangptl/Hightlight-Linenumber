@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+		       	$.ajax({
+			            url : "apachestart.txt",
+			            dataType: "text",
+			            success : function (data) {	
+			                $('.textarea').html(data);
+			            }
+		        	});
+
+		        	function selectTextareaLine(tarea,lineNum) {
+			      	lineNum--; // array starts at 0
+			      	var lines = tarea.value.split("\n");
+				        // calculate start/end
+				var startPos = 0, endPos = tarea.value.length;
+			        	for(var x = 0; x < lines.length; x++) {
+				            if(x == lineNum) {
+				                break;
+				            }
+				            startPos += (lines[x].length+1);
+				}
+			       	var endPos = lines[lineNum].length+startPos+6;
+		      		var a =  tarea.textContent;
+			        	var b = "<mark>";
+			        	var c = "</mark>";
+			       	 var startpoint = [a.slice(0, startPos), b, a.slice(startPos)].join('');
+			        	var endpoint = [startpoint.slice(0, endPos), c, startpoint.slice(endPos)].join('');
+			        	$(".text, .textarea").html(eval('endpoint'));
+			        return false;
+		    	}
+			
+			setTimeout(function(){
+				var tarea = document.getElementById('xyc');
+				selectTextareaLine(tarea,'5');	
+				selectTextareaLine(tarea,'6');	
+				selectTextareaLine(tarea,'9');	
+				selectTextareaLine(tarea,'2');	
+			},100);
+			
+		}); 
+	</script>
+	<style type="text/css">
+	textarea:focus{ border: none; }
+	</style>
+</head>
+<body>
+<textarea id="xyc" class="textarea" style="resize: none; border:0; width:100%; height: 400px; display: none;"  ></textarea>
+<pre class="text"></pre>
+</body>
+</html>
